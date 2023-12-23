@@ -10,4 +10,5 @@ CONFIG += qt
 
 SOURCES += \
         main.cpp         \
-        tst_databasemanager.cpp
+        tst_databasemanager.cpp \
+        tst_geolocation.cpp

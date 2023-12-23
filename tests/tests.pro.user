@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 6.0.2, 2023-12-18T16:23:02. -->
+<!-- Written by QtCreator 6.0.2, 2023-12-23T05:24:49. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -69,11 +69,16 @@
    </valuemap>
    <valuemap type="QVariantMap" key="AutoTest.CheckStates">
     <value type="Qt::CheckState" key="1@/home/cherubim/Videos/Somofo/SofomoChallenge/tests/tst_databasemanager.cpp:CloseDatabase">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/cherubim/Videos/Somofo/SofomoChallenge/tests/tst_databasemanager.cpp:DatabaseManagerTest">Checked</value>
     <value type="Qt::CheckState" key="1@/home/cherubim/Videos/Somofo/SofomoChallenge/tests/tst_databasemanager.cpp:DeleteData">Checked</value>
     <value type="Qt::CheckState" key="1@/home/cherubim/Videos/Somofo/SofomoChallenge/tests/tst_databasemanager.cpp:InsertData">Checked</value>
     <value type="Qt::CheckState" key="1@/home/cherubim/Videos/Somofo/SofomoChallenge/tests/tst_databasemanager.cpp:OpenDatabase">Checked</value>
     <value type="Qt::CheckState" key="1@/home/cherubim/Videos/Somofo/SofomoChallenge/tests/tst_databasemanager.cpp:SearchData">Checked</value>
-    <value type="Qt::CheckState" key="1@/home/cherubim/Videos/Somofo/SofomoChallenge/tests/tst_opendatabase.cpp:DatabaseManagerTest">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/cherubim/Videos/Somofo/SofomoChallenge/tests/tst_geolocation.cpp:GeoLocationTest">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/cherubim/Videos/Somofo/SofomoChallenge/tests/tst_geolocation.cpp:InvalidJson">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/cherubim/Videos/Somofo/SofomoChallenge/tests/tst_geolocation.cpp:LanguageTest">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/cherubim/Videos/Somofo/SofomoChallenge/tests/tst_geolocation.cpp:LocationTest">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/cherubim/Videos/Somofo/SofomoChallenge/tests/tst_geolocation.cpp:ValidJson">Checked</value>
    </valuemap>
    <value type="int" key="AutoTest.RunAfterBuild">0</value>
    <value type="bool" key="AutoTest.UseGlobal">true</value>

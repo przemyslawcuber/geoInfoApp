@@ -1,4 +1,8 @@
 #include "geolocationdownloader.h"
+
+#include "networkhelper.h"
+#include "geolocation.h"
+
 #include <QUrl>
 #include <QUrlQuery>
 #include <QJsonDocument>
@@ -37,23 +41,41 @@ void GeoLocationDownloader::onReplyFinished(QNetworkReply *reply)
     else
     {
         spdlog::error("Error: {}", reply->errorString().toStdString());
+        onError( NetworkHelper::networkErrorToString(reply->error()) );
     }
-
     reply->deleteLater();
+}
+
+void GeoLocationDownloader::onError(const QString& error) {
+    spdlog::error("GeoLocationDownloader error: {}", error.toStdString());
+
+    emit geoLocationDownloaderNetworkError( error );
 }
 
 void GeoLocationDownloader::processGeoLocation(const QByteArray &data)
 {
-    QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
+    spdlog::info("processGeoLocation");
 
-    if (!jsonDoc.isNull())
-    {
-        QJsonObject jsonObj = jsonDoc.object();
+    try {
+        nlohmann::json json = nlohmann::json::parse(data.toStdString());
 
-        emit geoLocationDataReceived(jsonObj);
-    }
-    else
-    {
-        spdlog::error("Failed to parse JSON data");
+        if (json.contains("error")) {
+            nlohmann::json error = json["error"];
+
+            if (error.contains("info")) {
+                std::string errorInfo = error["info"];
+                spdlog::info("Error Info: {}", errorInfo);
+                onError( QString::fromStdString(errorInfo) );
+                return;
+            }
+        }
+
+        GeoLocation geoLocation = GeoLocation::from_json( json );
+        emit geoLocationDataReceived(geoLocation);
+    } catch (const std::exception& e) {
+        QString errorMessage = QString::fromStdString(e.what());
+        QString errorInfo = "Error parsing JSON: " + errorMessage;
+        spdlog::error(errorInfo.toStdString());
+        onError( errorInfo );
     }
 }

@@ -1,5 +1,6 @@
-#ifndef GEOLOCATIONDOWNLOADER_H
-#define GEOLOCATIONDOWNLOADER_H
+#pragma once
+
+#include "geolocation.h"
 
 #include <QObject>
 #include <QNetworkAccessManager>
@@ -15,15 +16,15 @@ public:
     void downloadGeoLocation(const QString &ipAddress);
 
 signals:
-    void geoLocationDataReceived(const QJsonObject &jsonData);
+    void geoLocationDataReceived(const GeoLocation& geoLocation);
+    void geoLocationDownloaderNetworkError(const QString &error);
 
 private slots:
     void onReplyFinished(QNetworkReply *reply);
+    void onError(const QString& error);
     void processGeoLocation(const QByteArray &data);
 
 private:
     QNetworkAccessManager manager;
     QString apiKey;
 };
-
-#endif // GEOLOCATIONDOWNLOADER_H

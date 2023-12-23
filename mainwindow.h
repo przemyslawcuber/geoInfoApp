@@ -1,9 +1,9 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
 
 #include <QMainWindow>
 #include "geolocationdownloader.h"
 #include "databasemanager.h"
+#include "geolocation.h"
 
 #include <memory>
 
@@ -19,11 +19,17 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+signals:
+    void mapDataChanged(double latitude, double longitude);
+    void geoLocationDataChanged(const GeoLocation& geoLocation);
+
 public slots:
-    void updateTextBox(const QJsonObject &jsonData);
+    void updateTextBox(const GeoLocation& geoLocation);
 
 private slots:
-    void on_pushButton_clicked();
+    void onNetworkError(const QString &error);
+
+    void on_pushButton_getFromIPStack_clicked();
 
     void on_pushButton_getFromDB_clicked();
 
@@ -31,9 +37,10 @@ private slots:
 
     void on_pushButton_DeleteFromDb_clicked();
 
+    void updateMap(double latitude, double longitude);
+
 private:
     Ui::MainWindow *ui;
     GeoLocationDownloader geoLocationDownloader;
     std::unique_ptr<IDatabaseManager> dbManager;
 };
-#endif // MAINWINDOW_H

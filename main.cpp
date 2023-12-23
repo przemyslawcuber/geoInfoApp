@@ -12,6 +12,9 @@ int main(int argc, char *argv[])
     auto file_logger = spdlog::basic_logger_mt("file_logger", "test_log.txt");
     spdlog::set_default_logger(file_logger);
 
+    spdlog::flush_every(std::chrono::seconds(1));
+    spdlog::set_level(spdlog::level::debug);
+
     spdlog::info("Starting Geo location app");
 
     MainWindow w;

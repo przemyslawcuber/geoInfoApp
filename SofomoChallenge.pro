@@ -1,6 +1,4 @@
-QT       += core gui sql testlib
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets network
+QT += core gui sql testlib widgets network webkitwidgets webenginewidgets
 
 CONFIG += c++17 testcase
 
@@ -18,8 +16,12 @@ SOURCES += \
 
 HEADERS += \
     databasemanager.h \
+    geolocation.h \
     geolocationdownloader.h \
-    mainwindow.h
+    mainwindow.h \
+    maphelper.h \
+    networkhelper.h \
+    sqlquerybuilder.h
 
 FORMS += \
     mainwindow.ui

@@ -1,18 +1,20 @@
-#ifndef DATABASEMANAGER_H
-#define DATABASEMANAGER_H
+#pragma once
+
+#include "geolocation.h"
 
 #include <QObject>
 #include <QSqlDatabase>
+#include <QVariant>
 
 class IDatabaseManager
 {
 public:
     virtual bool openDatabase(const QString &dbName) = 0;
     virtual void closeDatabase() = 0;
-    virtual bool createTable() = 0;
-    virtual bool insertData(const QString &ip, const QString &country, const QString &region, const QString &city) = 0;
-    virtual QJsonObject searchData(const QString &ip) = 0;
-    virtual bool deleteData(const QString &ip) = 0;
+    virtual bool createTables() = 0;
+    virtual bool insertGeoLocation(const GeoLocation& geoLocation) = 0;
+    virtual QVariant getGeoLocationByIp(const QString &ip) = 0;
+    virtual bool deleteGeoLocationByIp(const QString &ip) = 0;
 };
 
 class DatabaseManager : public QObject, public IDatabaseManager
@@ -23,15 +25,29 @@ public:
     explicit DatabaseManager(QObject *parent = nullptr);
     virtual ~DatabaseManager();
 
+    /** openDatabase, closeDatabase and createTables should be hiden */
     bool openDatabase(const QString &dbName) override;
     void closeDatabase() override;
-    bool createTable() override;
-    bool insertData(const QString &ip, const QString &country, const QString &region, const QString &city) override;
-    QJsonObject searchData(const QString &ip) override;
-    bool deleteData(const QString &ip) override;
+    bool createTables() override;
+
+    bool insertGeoLocation(const GeoLocation& geoLocation) override;
+    QVariant getGeoLocationByIp(const QString &ip) override;
+    bool deleteGeoLocationByIp(const QString &ip) override;
+
+private:
+    int findLocationId(const Location& loc);
+    int insertLocation(const Location& loc);
+
+    int findGeoLocationIdByIp(const QString &ip);
+
+    Location getLocationById(int locationId) ;
+
+    std::vector<Language> getLanguagesForLocation(int locationId);
+    int insertLanguage(const Language& lang);
+    void insertLocationLanguageLink(int locationId, int languageId);
+
+    bool checkLanguageExists(QSqlQuery& query, const QString& languageName);
 
 private:
     QSqlDatabase database;
 };
-
-#endif // DATABASEMANAGER_H
